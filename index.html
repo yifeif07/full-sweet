@@ -378,7 +378,7 @@
     </div>
     <div class="modal-body">
       <div class="serv">
-        <div class="lab">Servings<small id="mYield"></small></div>
+        <div class="lab"><span id="mScaleLabel">Servings</span><small id="mYield"></small></div>
         <div class="stepper">
           <button id="minus" aria-label="Fewer servings">−</button>
           <span class="count" id="servCount">8</span>
@@ -401,150 +401,142 @@ const icons = {
   muffin:`<svg viewBox="0 0 80 80"><path d="M24 40 h32 l-4 26 q-1 4 -5 4 H33 q-4 0 -5 -4 Z" fill="#B86A24"/><path d="M20 40 q0 -18 20 -18 q20 0 20 18 Z" fill="#D98C3F"/><circle cx="40" cy="20" r="4" fill="#9C4A52"/><circle cx="31" cy="30" r="2.5" fill="#9C4A52"/><circle cx="49" cy="31" r="2.5" fill="#9C4A52"/></svg>`,
   tart:`<svg viewBox="0 0 80 80"><ellipse cx="40" cy="44" rx="30" ry="14" fill="#B86A24"/><ellipse cx="40" cy="40" rx="30" ry="14" fill="#E0A45C"/><ellipse cx="40" cy="40" rx="22" ry="9" fill="#9C4A52"/><circle cx="32" cy="38" r="3" fill="#FBF6EC" opacity=".5"/><circle cx="46" cy="42" r="2.5" fill="#FBF6EC" opacity=".5"/></svg>`,
   bread:`<svg viewBox="0 0 80 80"><path d="M16 50 q0 -26 24 -26 q24 0 24 26 q0 6 -6 6 H22 q-6 0 -6 -6 Z" fill="#D98C3F"/><path d="M28 30 l4 22 M40 26 l0 28 M52 30 l-4 22" stroke="#B86A24" stroke-width="2.5" stroke-linecap="round"/></svg>`,
-  scone:`<svg viewBox="0 0 80 80"><path d="M18 54 L40 22 L62 54 Z" fill="#D98C3F"/><path d="M18 54 L62 54 L60 60 H20 Z" fill="#B86A24"/><circle cx="40" cy="42" r="3" fill="#9C4A52"/><circle cx="33" cy="48" r="2.5" fill="#9C4A52"/><circle cx="47" cy="48" r="2.5" fill="#9C4A52"/></svg>`
+  scone:`<svg viewBox="0 0 80 80"><path d="M18 54 L40 22 L62 54 Z" fill="#D98C3F"/><path d="M18 54 L62 54 L60 60 H20 Z" fill="#B86A24"/><circle cx="40" cy="42" r="3" fill="#9C4A52"/><circle cx="33" cy="48" r="2.5" fill="#9C4A52"/><circle cx="47" cy="48" r="2.5" fill="#9C4A52"/></svg>`,
+  granola:`<svg viewBox="0 0 80 80"><path d="M18 46 q0 -8 8 -8 h28 q8 0 8 8 l-2 14 q-1 5 -6 5 H26 q-5 0 -6 -5 Z" fill="#B86A24"/><circle cx="30" cy="44" r="4" fill="#D98C3F"/><circle cx="42" cy="41" r="4.5" fill="#E0A45C"/><circle cx="52" cy="45" r="4" fill="#D98C3F"/><circle cx="36" cy="50" r="3.5" fill="#9C4A52"/><circle cx="48" cy="51" r="3" fill="#7A8450"/></svg>`,
+  macaron:`<svg viewBox="0 0 80 80"><ellipse cx="40" cy="30" rx="26" ry="13" fill="#7A8450"/><ellipse cx="40" cy="50" rx="26" ry="13" fill="#7A8450"/><rect x="14" y="36" width="52" height="10" fill="#F4EBD9"/><ellipse cx="40" cy="30" rx="26" ry="7" fill="#8A9560"/></svg>`,
+  choux:`<svg viewBox="0 0 80 80"><circle cx="40" cy="44" r="26" fill="#D98C3F"/><path d="M22 34 q6 -6 12 0 q6 -6 12 0 q6 -6 12 0" stroke="#B86A24" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="30" cy="46" r="3" fill="#B86A24"/><circle cx="44" cy="50" r="3.5" fill="#3A2E25"/><circle cx="52" cy="44" r="2.5" fill="#B86A24"/></svg>`
 };
 
 // ---- recipe data ----
 // amounts are per the base serving count; they scale linearly
 const recipes = [
   {
-    icon:"cookie", tag:"Cookies", title:"Brown Butter Date Cookies",
-    desc:"Chewy, caramel-deep, and sweetened mostly with dates.",
-    time:"35 min", level:"Easy", base:18, yieldUnit:"cookies",
+    icon:"granola", tag:"Breakfast", title:"Loaded Homemade Granola",
+    desc:"Crunchy baked oats you can pile high with your favorite mix-ins.",
+    time:"40 min", level:"Easy", base:1, yieldUnit:"batch",
     ing:[
-      {n:"Browned butter", a:115, u:"g"},
-      {n:"Soft Medjool dates, pitted", a:120, u:"g"},
-      {n:"Coconut sugar", a:40, u:"g", swap:"½ the usual"},
-      {n:"Egg", a:1, u:""},
-      {n:"Vanilla", a:1, u:"tsp"},
-      {n:"All-purpose flour", a:180, u:"g"},
-      {n:"Baking soda", a:0.5, u:"tsp"},
-      {n:"Flaky salt, to finish", a:1, u:"pinch"},
-      {n:"Dark chocolate (70%+), chopped", a:90, u:"g"}
+      {n:"Rolled oats", a:100, u:"g", swap:"best for the look"},
+      {n:"Coconut oil", a:10, u:"g"},
+      {n:"Honey or maple syrup", a:20, u:"g"},
+      {n:"Nuts", a:30, u:"g"},
+      {n:"Egg white", a:1, u:""}
     ],
     steps:[
-      "Blend the dates with the warm browned butter into a smooth paste — this is your main sweetener.",
-      "Whisk in coconut sugar, egg, and vanilla until glossy.",
-      "Fold in flour and baking soda just until combined, then the chopped chocolate.",
-      "Chill the dough 20 minutes so the butter firms up.",
-      "Scoop, flatten slightly, and bake at 175°C / 350°F for 10–12 minutes until edges set.",
-      "Finish with flaky salt while warm. The salt is what makes them taste rich, not flat."
+      "Mix everything together until the oats and nuts are evenly coated.",
+      "Spread on a lined tray and bake at 300°F for 15 minutes.",
+      "Take it out, flip/stir, then bake for another 15 minutes.",
+      "Let it cool completely, then break into small clusters.",
+      "Stir in any extra mix-ins you like once cooled.",
+      "If adding dried fruit like cranberries, add them after baking — baking them turns them bitter and burnt."
     ]
   },
   {
-    icon:"banana", tag:"Loaf", title:"No-Added-Sugar Banana Bread",
-    desc:"Sweetened entirely by very ripe bananas and a date swirl.",
-    time:"1 hr", level:"Easy", base:10, yieldUnit:"slices",
+    icon:"cookie", tag:"Cookies", title:"Matcha Yuzu Butter Cookies",
+    desc:"Crumbly butter cookies with matcha's gentle bitterness and a light yuzu sweetness.",
+    time:"1 hr + chilling", level:"Medium", base:1, yieldUnit:"batch",
     ing:[
-      {n:"Very ripe bananas, mashed", a:3, u:"", swap:"the riper the better"},
-      {n:"Eggs", a:2, u:""},
-      {n:"Greek yogurt", a:80, u:"g"},
-      {n:"Olive oil", a:50, u:"ml"},
-      {n:"Date paste", a:60, u:"g", swap:"in place of sugar"},
-      {n:"Whole wheat flour", a:200, u:"g"},
-      {n:"Baking powder", a:1.5, u:"tsp"},
-      {n:"Cinnamon", a:1, u:"tsp"},
-      {n:"Walnuts, chopped", a:60, u:"g"}
+      {n:"Unsalted butter", a:63, u:"g"},
+      {n:"Powdered sugar", a:35, u:"g"},
+      {n:"Egg yolk", a:1, u:""},
+      {n:"Cake flour", a:105, u:"g"},
+      {n:"Almond flour", a:25, u:"g"},
+      {n:"Salt", a:2, u:"g"},
+      {n:"Matcha powder", a:7, u:"g"},
+      {n:"Cream cheese (filling)", a:100, u:"g"},
+      {n:"Unsalted butter (filling)", a:20, u:"g"},
+      {n:"Granulated sugar (filling)", a:35, u:"g"},
+      {n:"Matcha powder (filling)", a:5, u:"g"},
+      {n:"Yuzu jam (filling)", a:10, u:"g"}
     ],
     steps:[
-      "Mash the bananas well and whisk in eggs, yogurt, oil, and date paste.",
-      "Combine flour, baking powder, and cinnamon in a separate bowl.",
-      "Fold wet into dry until just mixed — overmixing makes it gummy.",
-      "Stir through most of the walnuts, saving some for the top.",
-      "Pour into a lined loaf tin, scatter remaining walnuts, and bake at 170°C / 340°F for 50–55 minutes.",
-      "Cool fully before slicing; it firms up and the banana flavor deepens as it sits."
+      "Soften the butter until a light press leaves an indent, then sift in the powdered sugar and mix until smooth with no lumps.",
+      "Stir in the egg yolk until fully combined.",
+      "Mix cake flour, almond flour, salt, and matcha powder together, then sift into the butter and fold into a smooth, non-sticky dough.",
+      "Roll the dough between parchment to 3mm thick and refrigerate 30 minutes.",
+      "Cut out shapes, then chill in the freezer to set.",
+      "Bake on the middle rack at 350°F for 12 minutes; let cool.",
+      "For the filling, soften cream cheese and butter, beat with sugar until smooth, then split in two: one half with matcha, one half with yuzu jam.",
+      "Pipe the filling onto the cookies, freeze 30 minutes, then eat directly — super crumbly and flaky."
     ]
   },
   {
-    icon:"muffin", tag:"Muffins", title:"Blueberry Almond Muffins",
-    desc:"Almond flour for body, fresh berries for natural sweetness.",
-    time:"40 min", level:"Easy", base:12, yieldUnit:"muffins",
+    icon:"tart", tag:"Pastry", title:"Fenglisu (Pineapple Shortcake)",
+    desc:"Buttery shortcrust wrapped around a homemade pineapple filling.",
+    time:"2 hr", level:"Advanced", base:22, yieldUnit:"pieces",
     ing:[
-      {n:"Almond flour", a:200, u:"g"},
-      {n:"All-purpose flour", a:120, u:"g"},
-      {n:"Baking powder", a:2, u:"tsp"},
-      {n:"Eggs", a:3, u:""},
-      {n:"Milk", a:120, u:"ml"},
-      {n:"Maple syrup", a:60, u:"ml", swap:"the only sweetener"},
-      {n:"Melted butter", a:60, u:"g"},
-      {n:"Lemon zest", a:1, u:""},
-      {n:"Fresh blueberries", a:200, u:"g"}
+      {n:"Pineapple flesh", a:1800, u:"g"},
+      {n:"Butter (filling)", a:15, u:"g"},
+      {n:"Lemon juice", a:15, u:"g"},
+      {n:"Maltose", a:40, u:"g"},
+      {n:"Butter (dough)", a:175, u:"g"},
+      {n:"Powdered sugar", a:30, u:"g"},
+      {n:"Whole egg, beaten", a:42, u:"g"},
+      {n:"Cake flour", a:208, u:"g"},
+      {n:"Milk powder", a:28, u:"g"},
+      {n:"Almond flour", a:17, u:"g"},
+      {n:"Cheese powder", a:17, u:"g"}
     ],
     steps:[
-      "Whisk both flours with the baking powder.",
-      "In another bowl, beat eggs, milk, maple syrup, melted butter, and lemon zest.",
-      "Combine gently, then fold in blueberries (toss them in a little flour first so they don't sink).",
-      "Divide into a lined muffin tin, filling each almost to the top.",
-      "Bake at 180°C / 360°F for 20–24 minutes until springy and golden.",
-      "Let them cool 10 minutes in the tin — almond flour bakes stay tender once rested."
+      "Cut the pineapple into chunks and pulse in a juicer — don't blend it too fine.",
+      "Squeeze out the juice with cheesecloth, then boil it down over high heat into a concentrated syrup.",
+      "Add the pineapple pulp back in with the butter, lemon juice, and maltose; stir-fry over heat until it comes together into a ball.",
+      "Transfer to a plate, press plastic wrap onto the surface, and let cool.",
+      "For the dough, soften the butter, add sugar, and beat until fluffy.",
+      "Add the beaten egg in two additions, beating well after each until absorbed.",
+      "Sift the dry ingredients together and fold into the butter mixture until combined.",
+      "Divide dough into 20g portions and filling into 15g portions; wrap the filling in the dough and flatten slightly.",
+      "Brush with reserved egg wash and bake on the upper-middle rack at 335°F for 22 minutes. Let cool before eating."
     ]
   },
   {
-    icon:"tart", tag:"Dessert", title:"Roasted Strawberry Yogurt Tart",
-    desc:"Roasting concentrates the fruit so you need almost no sugar.",
-    time:"50 min + chill", level:"Medium", base:8, yieldUnit:"slices",
+    icon:"macaron", tag:"Cookies", title:"Foolproof Macarons",
+    desc:"Reliable shells with no cracks and no hollows, plus a dark chocolate ganache.",
+    time:"1 hr + resting", level:"Advanced", base:1, yieldUnit:"batch",
     ing:[
-      {n:"Strawberries, halved", a:400, u:"g"},
-      {n:"Honey", a:20, u:"g", swap:"just for roasting"},
-      {n:"Oat + almond crust", a:1, u:"base"},
-      {n:"Thick Greek yogurt", a:400, u:"g"},
-      {n:"Vanilla", a:1, u:"tsp"},
-      {n:"Lemon juice", a:1, u:"tbsp"},
-      {n:"Gelatin or agar", a:1, u:"tsp"}
+      {n:"Powdered sugar", a:45, u:"g"},
+      {n:"Almond flour (before sifting)", a:45, u:"g"},
+      {n:"Cornstarch", a:5, u:"g"},
+      {n:"Egg whites", a:30, u:"g"},
+      {n:"Granulated sugar", a:21, u:"g"},
+      {n:"Dark chocolate (filling)", a:45, u:"g"},
+      {n:"Heavy cream (filling)", a:45, u:"g"}
     ],
     steps:[
-      "Roast strawberries with the honey at 200°C / 390°F for 20 minutes until jammy, then cool.",
-      "Press the oat-almond crust into a tart tin and bake until just golden; cool fully.",
-      "Bloom gelatin/agar and fold into yogurt with vanilla and lemon.",
-      "Spread the yogurt filling into the cooled crust.",
-      "Top with roasted strawberries and their syrup.",
-      "Chill at least 4 hours so it sets cleanly. The roasted fruit does all the sweetening."
+      "Whip the egg whites, adding the granulated sugar in 3 additions, until the meringue holds stiff, glossy, upright peaks.",
+      "Sift together the powdered sugar, almond flour, and cornstarch.",
+      "Fold the dry ingredients into the meringue in batches (macaronage) until the batter flows in a slow, smooth ribbon with no lumps.",
+      "Pipe evenly sized rounds, holding the bag vertical over the sheet.",
+      "Rest 20 minutes in a well-ventilated spot until the surface is no longer sticky.",
+      "Bake at 160°C / 320°F for 15 minutes for round, flawless shells.",
+      "For the filling, melt the dark chocolate and heavy cream together over a bain-marie until smooth, then pipe between the shells."
     ]
   },
   {
-    icon:"bread", tag:"Bread", title:"Soft Cardamom Milk Buns",
-    desc:"Barely sweet, pillowy buns that lean on spice instead of sugar.",
-    time:"3 hr (mostly rising)", level:"Medium", base:9, yieldUnit:"buns",
+    icon:"choux", tag:"Pastry", title:"Boba Milk Tea Choux Puffs",
+    desc:"Craquelin choux puffs filled with brown sugar boba cream — like squeezable milk tea.",
+    time:"1.5 hr", level:"Advanced", base:1, yieldUnit:"batch",
     ing:[
-      {n:"Bread flour", a:400, u:"g"},
-      {n:"Instant yeast", a:7, u:"g"},
-      {n:"Coconut sugar", a:25, u:"g", swap:"¼ of usual"},
-      {n:"Ground cardamom", a:1, u:"tsp"},
-      {n:"Warm milk", a:220, u:"ml"},
-      {n:"Egg", a:1, u:""},
-      {n:"Soft butter", a:40, u:"g"},
-      {n:"Salt", a:1, u:"tsp"}
+      {n:"Softened butter (craquelin)", a:30, u:"g"},
+      {n:"Powdered sugar (craquelin)", a:10, u:"g"},
+      {n:"Brown sugar (craquelin)", a:5, u:"g"},
+      {n:"Cake flour (craquelin)", a:30, u:"g"},
+      {n:"Butter (choux)", a:30, u:"g"},
+      {n:"Black tea, brewed", a:66, u:"g"},
+      {n:"Salt", a:0.6, u:"g"},
+      {n:"Flour (choux)", a:36, u:"g"},
+      {n:"Medium eggs, room temp", a:2, u:""},
+      {n:"Heavy cream (filling)", a:150, u:"g"},
+      {n:"Brown sugar (filling)", a:10, u:"g"},
+      {n:"Cooked boba pearls", a:1, u:"as needed"}
     ],
     steps:[
-      "Mix flour, yeast, coconut sugar, cardamom, and salt.",
-      "Add warm milk and egg; knead 8–10 minutes until smooth.",
-      "Work in the soft butter until the dough is supple, then rise until doubled (~1 hr).",
-      "Shape into buns, place in a tin, and rise again 40 minutes.",
-      "Brush with milk and bake at 180°C / 360°F for 18–20 minutes.",
-      "The cardamom makes them read as 'sweet' to your brain even with very little sugar."
-    ]
-  },
-  {
-    icon:"scone", tag:"Breakfast", title:"Apple Cinnamon Oat Scones",
-    desc:"Grated apple keeps them moist and sweet without piling on sugar.",
-    time:"35 min", level:"Easy", base:8, yieldUnit:"scones",
-    ing:[
-      {n:"Rolled oats", a:120, u:"g"},
-      {n:"Whole wheat flour", a:180, u:"g"},
-      {n:"Baking powder", a:2, u:"tsp"},
-      {n:"Cinnamon", a:1.5, u:"tsp"},
-      {n:"Cold butter, cubed", a:80, u:"g"},
-      {n:"Grated apple", a:150, u:"g", swap:"natural sweetness"},
-      {n:"Maple syrup", a:30, u:"ml"},
-      {n:"Milk", a:60, u:"ml"}
-    ],
-    steps:[
-      "Mix oats, flour, baking powder, and cinnamon.",
-      "Rub in cold butter until the mix looks like coarse crumbs.",
-      "Stir in grated apple, maple syrup, and just enough milk to bring it together.",
-      "Pat into a round and cut into wedges.",
-      "Bake at 200°C / 390°F for 16–18 minutes until firm and golden.",
-      "Best warm — the apple keeps the crumb soft for days."
+      "Craquelin: mix softened butter with the brown and powdered sugars until smooth, sift in the cake flour, and knead into a dough. Roll to 2mm between parchment, freeze, cut small circles, and keep frozen.",
+      "Choux: heat butter, black tea, and salt over low until melted, then remove as soon as it boils.",
+      "Add all the flour at once off the heat and stir quickly until a thin film forms on the pan and the dough balls up.",
+      "Cool slightly, then add the beaten eggs a little at a time until the batter falls slowly in a V — you may not need all the egg.",
+      "Pipe mounds onto a lined sheet, top each with a frozen craquelin disc, and bake at 180°C / 356°F for 25–30 minutes. Don't open the door, or they'll collapse.",
+      "Filling: whip the heavy cream with brown sugar until it holds firm ridges, then fold in the drained boba pearls.",
+      "Once puffs are fully cool, poke a hole in the bottom and pipe in the brown sugar boba cream. Best eaten fresh — within half a day, as the boba hardens over time."
     ]
   }
 ];
@@ -594,7 +586,9 @@ function openRecipe(i){
   document.getElementById('mIcon').innerHTML=icons[r.icon];
   document.getElementById('mTitle').textContent=r.title;
   document.getElementById('mDesc').textContent=r.desc;
-  document.getElementById('mYield').textContent=` · makes ${r.base} ${r.yieldUnit} at base`;
+  const isBatch = r.yieldUnit==='batch';
+  document.getElementById('mScaleLabel').textContent = isBatch ? 'Batches' : 'Servings';
+  document.getElementById('mYield').textContent = isBatch ? ` · one full batch` : ` · makes ${r.base} ${r.yieldUnit}`;
   document.getElementById('servCount').textContent=serv;
   document.getElementById('mSteps').innerHTML=r.steps.map(s=>`<li>${s}</li>`).join('');
   renderIng();
